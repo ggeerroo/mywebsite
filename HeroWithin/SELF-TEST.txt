@@ -1,0 +1,43 @@
+SELF-TEST
+Discover the Archetypes Dominant in Your Life
+Indicate how frequently the following statements reflect your attitudes by scoring them from O to 4: Never=0; Seldom=1; Sometimes=2;Frequently=3; Always=4, After taking the test, see columns below that categorize the statements into archetypes, Total up your score in each category, Nine or more in each suggests that the ar,chetype is active in your life; 15 or more suggests it is very active,
+1, — It's important to be careful, Other people will cheat you
+when they can,
+2, I find that when I change my attitudes my environment
+changes,
+3, _ Most important to me right now are identity issues, I'm
+not sure who I am,
+4, — I push hard to prove myself and to succeed,
+5, _ The world is good and I am safe and cared for,
+6, _ I feel very alone, but it gives me satisfaction to see that
+I can make it on my own,
+7, — The most important thing is loving,
+"I often feel disappointed in or betrayed by other people.",
+"All seeming problems really are illusions, I can assert God's love/the perfection of the universe and once again see that all is well.",
+"I am very competitive and really enjoy winning.",
+"Times have been rough, but I've learned to cope.",
+"I find out about my own shadow self by what upsets me in others.",
+"I use drugs/alcohol to get high and feel better, (Or: I use shopping, work, or frantic activity to divert myself from problems,).",
+"I expect people I meet to be trustworthy.",
+"When challenged, I stand up for myself and, if necessary, fight to defend myself.",
+"I'm in a new job/doing my job differently/undertaking a new course of study.",
+"I expect to be loved and cared for.",
+"I struggle hard for the causes/ideas/values I believe in and against those that are wrong or harmful.",
+"I frequently give people more than I get back.",
+"What I really want is someone to take care of me, but there is no one who will/can really care for me.",
+"When I am betrayed or unjustly treated, it reminds me to take pains to be fair to others.",
+"I love to travel/study/experiment because I find I learn about myself and the world when I do.",
+"I see no evil, hear no evil, speak no evil.",
+"I feel most myself when I'm creating something new.",
+"I want my life to make a difference, to make a mark on the world.",
+"When I stay calm and centered, others seem quieted too.",
+"If others could just see the light, they could have as wonderful a life as I do.",
+"Since I've changed, my world has changed radically, Years ago, I would not have imagined things would turn out so well.",
+"I think I'm justified in feeling superior to other people: I'm smarter, or better educated, or stronger, or more disciplined, or hardworking, or have better values, or because of my sex, my racial or ethnic heritage, my class, my accomplishments, my beliefs.",
+"Tragedies (accidents, illnesses) often happen to me and those around me.",
+"I work hard but do not expect to be rewarded or appreciated adequately for what I do.",
+"If I could only win that jackpot, all my problems would be solved.",
+"I feel good about myself and grateful for my life.",
+"I would like to be more appreciated by others.",
+"I'll do whatever life requires of me, I want to make whatever contribution I can.",
+"I sometimes avoid or sabotage intimacy with others in order to maintain my freedom."
