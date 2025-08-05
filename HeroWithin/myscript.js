@@ -54,19 +54,9 @@
       Martyr: 0,        
       Magician: 0
     };
-    
-/*     // Use only valid indices (0–6) for your current statements
-    const archetypes = {    
-      Innocent: [4],   // e.g. "The world is good..." (index 4)
-      Orphan: [0, 5, 7, 8],  // e.g. "It's important to be careful..." (index 0), "I feel very alone..." (index 5)
-      Wanderer: [2],   // e.g. "Most important to me right now..." (index 2)
-      Warrior: [3],    // e.g. "I push hard to prove myself..." (index 3)
-      Martyr: [6],     // e.g. "The most important thing is loving." (index 6)
-      Magician: [1, 9, 10]    // e.g. "I find that when I change my attitudes..." (index 1)
-    }; */
-    
-    // Add certain values in the array to one of 6 archetypes: Innocent, Orphan, Wanderer, Warrior, Martyr, Magician
-    // Specific answers are to be assigned to each archetype
+
+
+    // Each answer corresponds to a specific archetype based on the index
     const archetypes = {    
     Innocent: [5, 9, 14, 17, 23, 27],
     Orphan: [1, 8, 13, 20, 30, 32],
@@ -83,9 +73,11 @@
     }
     return scores;
   };
-
+ 
   document.addEventListener('DOMContentLoaded', function() {
-  // Show results on results.html
+  
+  /*
+    // Show results on results.html
   if (window.location.pathname.endsWith('results.html')) {
     const scores = JSON.parse(localStorage.getItem('archetypeScores'));
     const body = document.body;
@@ -114,7 +106,7 @@
       body.innerHTML += '<p>No results found. Please complete the test first.</p>';
     }
     return;
-  }
+  } */
 
   // Button on index.html
   const startBtn = document.getElementById('startTestButton');
@@ -150,4 +142,68 @@
       });
     });
   }
+
+ 
+  // Archetype info for results.html
+  if (window.location.pathname.endsWith('results.html')) {
+    const scores = JSON.parse(localStorage.getItem('archetypeScores'));
+    const archetypeData = {
+      Innocent: "The Innocent seeks safety and happiness. Their core desire is to experience paradise and do things right.",
+      Orphan: "The Orphan desires belonging and safety. They are empathetic, realistic, and seek to connect with others.",
+      Wanderer: "The Wanderer seeks independence and fulfillment. They are driven by a desire to explore and find their own path.",
+      Warrior: "The Warrior wants to prove their worth through courage and achievement. They are competitive and determined.",
+      Martyr: "The Martyr is motivated by a desire to help others, often putting others' needs before their own.",
+      Magician: "The Magician seeks transformation and growth. They are visionary, charismatic, and strive to make dreams reality."
+    };
+    const body = document.body;
+    body.innerHTML = '<h2>Your Archetype Scores</h2>';
+    if (scores) {
+      let active = [];
+      let veryActive = [];
+      let listHtml = '<ul>';
+      Object.entries(scores).forEach(([archetype, score]) => {
+        listHtml += `<li><a href="#" class="archetype-info-link" data-archetype="${archetype}"><strong>${archetype}</strong></a>: ${score}</li>`;
+        if (score >= 15) {
+          veryActive.push(archetype);
+        } else if (score >= 9) {
+          active.push(archetype);
+        }
+      });
+      listHtml += '</ul>';
+      body.innerHTML += listHtml;
+      if (veryActive.length > 0) {
+        body.innerHTML += `<h3>Very Active Archetypes (15+):</h3><ul>${veryActive.map(a => `<li>${a}</li>`).join('')}</ul>`;
+      }
+      if (active.length > 0) {
+        body.innerHTML += `<h3>Active Archetypes (9+):</h3><ul>${active.map(a => `<li>${a}</li>`).join('')}</ul>`;
+      }
+      if (veryActive.length === 0 && active.length === 0) {
+        body.innerHTML += `<p>No active archetypes (9 or more) identified.</p>`;
+      }
+      body.innerHTML += `<div id="archetypeInfoModal" style="display:none; border:1px solid #ccc; padding:15px; margin-top:20px; background:#fafafa;"></div>`;
+    } else {
+      body.innerHTML += '<p>No results found. Please complete the test first.</p>';
+    }
+
+    // Add click handlers for archetype info links
+    document.querySelectorAll('.archetype-info-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const name = this.dataset.archetype;
+        const modal = document.getElementById('archetypeInfoModal');
+        modal.innerHTML = `<h3>${name}</h3><p>${archetypeData[name]}</p>
+          <button id="closeArchetypeInfo">Close</button>`;
+        modal.style.display = 'block';
+        // Scroll to modal
+        modal.scrollIntoView({behavior: "smooth"});
+        // Hide other content if you want, or just overlay
+        document.getElementById('closeArchetypeInfo').onclick = function() {
+          modal.style.display = 'none';
+        };
+      });
+    });
+    return;
+  }
+
+  
 });
