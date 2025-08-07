@@ -148,12 +148,74 @@
   if (window.location.pathname.endsWith('results.html')) {
     const scores = JSON.parse(localStorage.getItem('archetypeScores'));
     const archetypeData = {
-      Innocent: "The Innocent seeks safety and happiness. Their core desire is to experience paradise and do things right.",
-      Orphan: "The Orphan desires belonging and safety. They are empathetic, realistic, and seek to connect with others.",
-      Wanderer: "The Wanderer seeks independence and fulfillment. They are driven by a desire to explore and find their own path.",
-      Warrior: "The Warrior wants to prove their worth through courage and achievement. They are competitive and determined.",
-      Martyr: "The Martyr is motivated by a desire to help others, often putting others' needs before their own.",
-      Magician: "The Magician seeks transformation and growth. They are visionary, charismatic, and strive to make dreams reality."
+      Innocent: {
+        "":"The Innocent is not a heroic archetype. When we live in paradise there is no need for goals, fears, tasks, work, etc. The Innocent is both pre- and post- heroic.",
+      },
+      Orphan: {
+        Goals: "Belonging, safety, empathy, realism.",
+        "Worst Fear": "Abandonment, exploitation.",
+        "Response to the Dragon": "Endure, seek support.",
+        Spirituality: "Questions faith, seeks meaning.",
+        "Intellect/Education": "Practical, learns from hardship.",
+        Relationships: "Wants connection, fears betrayal.",
+        Emotions: "Wary, realistic, sometimes pessimistic.",
+        "Physical health": "Sensitive to stress.",
+        Work: "Cooperative, values teamwork.",
+        "Material World": "Seeks stability.",
+        "Task/Achievement": "Survive, connect, find safety."
+      },
+      Wanderer: {
+        Goals: "Independence, fulfillment, exploration.",
+        "Worst Fear": "Conformity, entrapment.",
+        "Response to the Dragon": "Escape, seek new paths.",
+        Spirituality: "Spiritual seeker, open-minded.",
+        "Intellect/Education": "Curious, loves learning.",
+        Relationships: "Values freedom, avoids dependence.",
+        Emotions: "Restless, adventurous.",
+        "Physical health": "Active, enjoys movement.",
+        Work: "Prefers autonomy, creative roles.",
+        "Material World": "Minimalist, values experiences.",
+        "Task/Achievement": "Find own path, self-discovery."
+      },
+      Warrior: {
+        Goals: "Prove worth, courage, achievement.",
+        "Worst Fear": "Weakness, defeat.",
+        "Response to the Dragon": "Fight, confront challenges.",
+        Spirituality: "Belief in justice, personal strength.",
+        "Intellect/Education": "Strategic, competitive.",
+        Relationships: "Protective, loyal.",
+        Emotions: "Determined, passionate.",
+        "Physical health": "Strong, disciplined.",
+        Work: "Goal-oriented, thrives on challenge.",
+        "Material World": "Seeks victory, status.",
+        "Task/Achievement": "Win, achieve, overcome."
+      },
+      Martyr: {
+        Goals: "Help others, self-sacrifice.",
+        "Worst Fear": "Selfishness, being unappreciated.",
+        "Response to the Dragon": "Suffer for others, endure.",
+        Spirituality: "Compassion, service.",
+        "Intellect/Education": "Empathetic, values meaning.",
+        Relationships: "Gives more than receives.",
+        Emotions: "Sensitive, caring.",
+        "Physical health": "Neglects own needs.",
+        Work: "Service-oriented, supportive.",
+        "Material World": "Shares resources.",
+        "Task/Achievement": "Make a difference, serve."
+      },
+      Magician: {
+        Goals: "Transformation, growth, vision.",
+        "Worst Fear": "Stagnation, evil uses of power.",
+        "Response to the Dragon": "Transform, heal.",
+        Spirituality: "Mystical, seeks enlightenment.",
+        "Intellect/Education": "Visionary, creative.",
+        Relationships: "Charismatic, inspiring.",
+        Emotions: "Hopeful, imaginative.",
+        "Physical health": "Holistic, mind-body connection.",
+        Work: "Innovative, change agent.",
+        "Material World": "Sees potential everywhere.",
+        "Task/Achievement": "Make dreams reality, transform."
+      }
     };
     const body = document.body;
     body.innerHTML = '<h2>Your Archetype Scores</h2>';
@@ -191,12 +253,19 @@
         e.preventDefault();
         const name = this.dataset.archetype;
         const modal = document.getElementById('archetypeInfoModal');
-        modal.innerHTML = `<h3>${name}</h3><p>${archetypeData[name]}</p>
-          <button id="closeArchetypeInfo">Close</button>`;
+        const data = archetypeData[name];
+        let infoHtml = `<h3>${name}</h3>`;
+        if (data) {
+          infoHtml += '<ul>';
+          Object.entries(data).forEach(([key, value]) => {
+            infoHtml += `<li><strong>${key}:</strong> ${value}</li>`;
+          });
+          infoHtml += '</ul>';
+        }
+        infoHtml += `<button id="closeArchetypeInfo">Close</button>`;
+        modal.innerHTML = infoHtml;
         modal.style.display = 'block';
-        // Scroll to modal
         modal.scrollIntoView({behavior: "smooth"});
-        // Hide other content if you want, or just overlay
         document.getElementById('closeArchetypeInfo').onclick = function() {
           modal.style.display = 'none';
         };
