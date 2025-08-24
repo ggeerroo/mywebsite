@@ -11,6 +11,6 @@ I wonder what would happen if I continue to fill it with my projects through my 
 What conclusion would someone reach if they were to do an analysis of the whole? What kind of person would they think I was? 
 Would there finally be an overarching cohesion? Would it just be a random collection of thoughts from a dispersed attention?
 This got deeper than intended.
-I value that side of myself that enojoys tinkering and learning. 
+I value that side of myself that enjoys tinkering and learning. 
 Maybe that's what this is.
-A digital monument to my playful self.
+A digital ode to my playful self.
