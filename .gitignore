@@ -1,0 +1,4 @@
+node_modules/
+.env
+github_passcode.txt
+_site/

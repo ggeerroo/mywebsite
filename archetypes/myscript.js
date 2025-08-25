@@ -76,37 +76,7 @@
  
   document.addEventListener('DOMContentLoaded', function() {
   
-  /*
-    // Show results on results.html
-  if (window.location.pathname.endsWith('results.html')) {
-    const scores = JSON.parse(localStorage.getItem('archetypeScores'));
-    const body = document.body;
-    body.innerHTML = '<h2>Your Archetype Scores</h2>';
-    if (scores) {
-      let active = [];
-      let veryActive = [];
-      Object.entries(scores).forEach(([archetype, score]) => {
-        body.innerHTML += `<p><strong>${archetype}:</strong> ${score}</p>`;
-        if (score >= 15) {
-          veryActive.push(archetype);
-        } else if (score >= 9) {
-          active.push(archetype);
-        }
-      });
-      if (veryActive.length > 0) {
-        body.innerHTML += `<h3>Very Active Archetypes (15+):</h3><ul>${veryActive.map(a => `<li>${a}</li>`).join('')}</ul>`;
-      }
-      if (active.length > 0) {
-        body.innerHTML += `<h3>Active Archetypes (9+):</h3><ul>${active.map(a => `<li>${a}</li>`).join('')}</ul>`;
-      }
-      if (veryActive.length === 0 && active.length === 0) {
-        body.innerHTML += `<p>No active archetypes (9 or more) identified.</p>`;
-      }
-    } else {
-      body.innerHTML += '<p>No results found. Please complete the test first.</p>';
-    }
-    return;
-  } */
+
 
   // Button on index.html
   const startBtn = document.getElementById('startTestButton');
@@ -217,7 +187,69 @@
         "Task/Achievement": "Make dreams reality, transform."
       }
     };
-    const body = document.body;
+    
+    const resultsContainer = document.getElementById('resultsContainer');
+      if (resultsContainer) {
+    let html = '<h2>Your Archetype Scores</h2>';
+    if (scores) {
+      let active = [];
+      let veryActive = [];
+      Object.entries(scores).forEach(([archetype, score]) => {
+        html += `<p><strong>${archetype}:</strong> ${score}</p>`;
+        if (score >= 15) {
+          veryActive.push(archetype);
+        } else if (score >= 9) {
+          active.push(archetype);
+        }
+      });
+      if (veryActive.length > 0) {
+        html += `<h3>Very Active Archetypes (15+):</h3><ul>${veryActive.map(a => `<li>${a}</li>`).join('')}</ul>`;
+      }
+      if (active.length > 0) {
+        html += `<h3>Active Archetypes (9+):</h3><ul>${active.map(a => `<li>${a}</li>`).join('')}</ul>`;
+      }
+      if (veryActive.length === 0 && active.length === 0) {
+        html += `<p>No active archetypes (9 or more) identified.</p>`;
+      }
+    } else {
+      html += '<p>No results found. Please complete the test first.</p>';
+    }
+    resultsContainer.innerHTML = html;
+  }
+
+  // Email sending handler
+    const sendBtn = document.getElementById('sendResultsButton');
+    if (sendBtn) {
+      sendBtn.onclick = async function() {
+        const email = document.getElementById('userEmail').value;
+        const statusDiv = document.getElementById('emailStatus');
+        if (!email) {
+          statusDiv.textContent = "Please enter a valid email address.";
+          return;
+        }
+        // Prepare results summary
+        let summary = "Your Archetype Scores:\n";
+        Object.entries(scores).forEach(([archetype, score]) => {
+          summary += `${archetype}: ${score}\n`;
+        });
+
+        try {
+          const response = await fetch('http://localhost:3000/send-results', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({email, summary})
+          });
+          if (response.ok) {
+            statusDiv.textContent = "Results sent to your email!";
+          } else {
+            statusDiv.textContent = "Failed to send email. Try again.";
+          }
+        } catch (err) {
+          statusDiv.textContent = "Error sending email.";
+        }
+      };
+    }
+   /*  const body = document.body;
     body.innerHTML = '<h2>Your Archetype Scores</h2>';
     if (scores) {
       let active = [];
@@ -272,7 +304,7 @@
       });
     });
     return;
-  }
-
-  
+  } */
+ }
+ 
 });
