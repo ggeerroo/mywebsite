@@ -26,11 +26,11 @@ const KEY_ESCAPE = 27;			// Escape key
 // Control difficulty
 const MAX_COLLECTABLES = 10;	// Number of collectables
 const MAX_CANYONS = 1; 	        // Number of canyons
-const MAX_LIVES = 300;			// Number of lives
-const MAX_SECONDS = 300;	    // Number of seconds for countdown
+const MAX_LIVES = 5;			// Number of lives
+const MAX_SECONDS = 30;	    // Number of seconds for countdown
 
 // Control background elements
-const MAX_TREES =5		        // Number of trees
+const MAX_TREES = 10		        // Number of trees
 //const MAX_MOUNTAINS = 2;		// Number of mountains
 //const MAX_CLOUDS = 4;			// Number of clouds
 
@@ -38,6 +38,9 @@ const MAX_TREES =5		        // Number of trees
 const MAX_PARTICLES = 100;      // Number of fire particles
 const MAX_LIFESPAN = 100;		// Lifespan of fire particles
 const MAX_SIZE = 15;			// Size of fire particles
+
+// Control walking speed
+const WALKING_INTERVAL = 5;		// Speed of walking animation
 
 
 
@@ -64,6 +67,8 @@ var coin_sound;
 var jump_sound;
 var win_sound;
 var plummet_sound;
+let walkCounter;
+let walkInterval = WALKING_INTERVAL;
 
 
 
@@ -270,6 +275,7 @@ function checkMovement()
 			// If no key is pressed, we stop the character
 			isLeft = false;
 			isRight = false;
+			walkCounter = 0;
 		}
 
 		// Falling after jump
@@ -303,11 +309,38 @@ function drawCharacter()
 	}
 	else if(isRight)
 	{
-		rightWalk();
+		if (walkCounter > walkInterval * 2)
+		{
+			walkCounter = 0;
+		}
+
+		if (walkCounter <= walkInterval) 
+		{
+			drawRightWalk1();	
+		}
+		else if(walkCounter > walkInterval)
+		{
+			drawRightWalk2();	
+		}
+		walkCounter++;
+			
 	}
 	else if(isLeft)
 	{
-		leftWalk();
+		if (walkCounter > walkInterval * 2)
+		{
+			walkCounter = 0;
+		}
+
+		if (walkCounter <= walkInterval) 
+		{
+			drawLeftWalk1();	
+		}
+		else if(walkCounter > walkInterval)
+		{
+			drawLeftWalk2();	
+		}
+		walkCounter++;
 	}
 	else if(isFalling || isPlummeting)
 	{
@@ -354,7 +387,8 @@ function updateCloud(cloud)
 // Draw the mountains
 function drawMountains()
 {
-	fill(153, 230, 153,90);
+	//fill(153, 230, 153, 90);
+	fill("rgba(128, 200, 239, 0.49)");
 	for (var i = 0; i < mountains.length; i++)
 	{
 		triangle(
@@ -657,7 +691,8 @@ function leftFall()
 	rect(character.position.x - character.arms.height, character.position.y - 55, character.arms.height, character.arms.width);
 }
 
-function rightWalk()
+
+function drawRightWalk1()
 {
 	// Head
 	rect(character.position.x - 8 , character.position.y - 70, character.head.width,character.head.height);
@@ -669,12 +704,46 @@ function rightWalk()
 	rect(character.position.x - 8, character.position.y - 55, character.torso.width, character.torso.height);
 
 	// Legs 
+	stroke("pink");
 	strokeWeight(character.legs.width);
 
 	// Right leg
-	line(character.position.x + character.torso.width/2 - 3, character.position.y - 25, character.position.x + 10 , character.position.y - 16);
+	line(character.position.x + character.torso.width/2 - 3, character.position.y - 25, character.position.x + 15 , character.position.y - 20);
 	// Right foot
-	line(character.position.x + 10, character.position.y - 16, character.position.x + 15 , character.position.y - 19);
+	line(character.position.x + 15 , character.position.y - 20, character.position.x + 18 , character.position.y - 23);
+
+	// Left leg
+	line(character.position.x - character.torso.width/2 + 2, character.position.y - 25, character.position.x - 15 , character.position.y - 23);
+	// Left foot
+	line(character.position.x - 15, character.position.y - 23, character.position.x - 15, character.position.y - 16);
+
+	
+	// Reset stroke weight
+	strokeWeight(1);
+
+	// Right arm
+	rect(character.position.x - character.torso.width/2 - character.arms.width + 10, character.position.y - 55, character.arms.height, character.arms.width);
+}
+
+function drawRightWalk2()
+{
+	// Head
+	rect(character.position.x - 8 , character.position.y - 70, character.head.width,character.head.height);
+		
+	// Left arm
+	rect(character.position.x - character.arms.height, character.position.y - 55, character.arms.height, character.arms.width);
+
+	// Torso
+	rect(character.position.x - 8, character.position.y - 55, character.torso.width, character.torso.height);
+
+	// Legs 
+	stroke("pink");
+	strokeWeight(character.legs.width);
+
+	// Right leg
+	line(character.position.x + character.torso.width/2 - 3, character.position.y - 25, character.position.x + 5 , character.position.y - 16);
+	// Right foot
+	line(character.position.x + 5 , character.position.y - 15, character.position.x + 12 , character.position.y - 16);
 
 	// Left leg
 	line(character.position.x - character.torso.width/2 + 2, character.position.y - 25, character.position.x - 10 , character.position.y - 16);
@@ -689,7 +758,7 @@ function rightWalk()
 	rect(character.position.x - character.torso.width/2 - character.arms.width + 10, character.position.y - 55, character.arms.height, character.arms.width);
 }
 
-function leftWalk()
+function drawLeftWalk1()
 {
 	// Head
 	rect(character.position.x - 8 , character.position.y - 70, character.head.width,character.head.height);
@@ -701,17 +770,18 @@ function leftWalk()
 	rect(character.position.x - 8, character.position.y - 55, character.torso.width, character.torso.height);
 
 	// Legs 
+	stroke("pink");
 	strokeWeight(character.legs.width);
 
 	// Right leg
-	line(character.position.x + character.torso.width/2 - 3, character.position.y - 25, character.position.x + 10 , character.position.y - 16);
+	line(character.position.x + character.torso.width/2 - 3, character.position.y - 25, character.position.x + 15 , character.position.y - 20);
 	// Right foot
-	line(character.position.x + 10, character.position.y - 16, character.position.x + 5, character.position.y - 12);
+	line(character.position.x + 15 , character.position.y - 20, character.position.x + 13 , character.position.y - 14);
 
 	// Left leg
-	line(character.position.x - character.torso.width/2 + 2, character.position.y - 25, character.position.x - 10 , character.position.y - 16);
+	line(character.position.x - character.torso.width/2 + 2, character.position.y - 25, character.position.x - 15 , character.position.y - 23);
 	// Left foot
-	line(character.position.x - 10 , character.position.y - 16, character.position.x - 15 , character.position.y - 16 );
+	line(character.position.x - 17, character.position.y - 23, character.position.x - 20, character.position.y - 27);
 			
 	// Reset stroke weight
 	strokeWeight(1);
@@ -719,6 +789,40 @@ function leftWalk()
 	// Left arm
 	rect(character.position.x - character.arms.height, character.position.y - 55, character.arms.height, character.arms.width)
 }
+
+function drawLeftWalk2()
+{
+	// Head
+	rect(character.position.x - 8 , character.position.y - 70, character.head.width,character.head.height);
+		
+	// Right arm 
+	rect(character.position.x - character.torso.width/2 - character.arms.width + 10, character.position.y - 55, character.arms.height, character.arms.width);
+
+	// Torso
+	rect(character.position.x - 8, character.position.y - 55, character.torso.width, character.torso.height);
+
+	// Legs 
+	stroke("pink");
+	strokeWeight(character.legs.width);
+
+	// Right leg
+	line(character.position.x + character.torso.width/2 - 3, character.position.y - 25, character.position.x + 5 , character.position.y - 16);
+	// Right foot
+	line(character.position.x + 5 , character.position.y - 15, character.position.x + 1 , character.position.y - 16);
+
+	// Left leg
+	line(character.position.x - character.torso.width/2 + 2, character.position.y - 25, character.position.x - 10 , character.position.y - 16);
+	// Left foot
+	line(character.position.x - 10 , character.position.y - 16, character.position.x - 15 , character.position.y - 16 );
+
+	
+	// Reset stroke weight
+	strokeWeight(1);
+
+	// Left arm
+	rect(character.position.x - character.arms.height, character.position.y - 55, character.arms.height, character.arms.width)
+}
+
 
 function falling()
 {
@@ -785,6 +889,7 @@ function startGame() {
 	cameraPosX = 0;
 	keepGoing = true;
 	timer = MAX_SECONDS;
+	walkCounter = 0;
 	
 	// Character 
 	character = {
